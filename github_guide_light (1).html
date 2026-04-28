@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Pages完全ガイド｜超初心者向け</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: #F5F4F0;
+  color: #1a1a1a;
+  font-size: 16px;
+  line-height: 1.85;
+}
+
+.top {
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding: 48px 20px 40px;
+}
+.top-tag {
+  display: inline-block;
+  background: #FF4E00;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 16px;
+  border-radius: 100px;
+  letter-spacing: 0.1em;
+  margin-bottom: 18px;
+}
+.top h1 {
+  font-size: clamp(20px, 5vw, 32px);
+  font-weight: 900;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.top h1 span { color: #FF4E00; }
+.top p { color: #888; font-size: 14px; }
+
+.steps-bar {
+  background: #fff;
+  border-bottom: 2px solid #111;
+  display: flex;
+  overflow-x: auto;
+}
+.step-tab {
+  flex: 1;
+  min-width: 80px;
+  padding: 14px 8px;
+  text-align: center;
+  border-right: 1px solid #eee;
+  font-size: 11px;
+  color: #666;
+}
+.step-tab:last-child { border-right: none; }
+.step-tab-num {
+  font-size: 20px;
+  font-weight: 900;
+  color: #FF4E00;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 16px 80px; }
+
+.step { margin-top: 36px; }
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.step-circle {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 900;
+  flex-shrink: 0; color: #fff;
+}
+.c1{background:#FF4E00} .c2{background:#2563EB} .c3{background:#16A34A}
+.c4{background:#7C3AED} .c5{background:#0891B2} .cx{background:#DC2626}
+
+.step-title { font-size: 18px; font-weight: 900; line-height: 1.3; }
+.step-sub { font-size: 13px; color: #888; margin-top: 2px; }
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #E0DDD6;
+  overflow: hidden;
+}
+
+.card-text {
+  padding: 18px 22px;
+  font-size: 15px;
+  color: #333;
+  line-height: 1.85;
+  border-bottom: 1px solid #F0EDE6;
+}
+.card-text:last-child { border-bottom: none; }
+.card-text b { color: #111; }
+
+/* クリック場所を示すボックス */
+.click-box {
+  margin: 10px 0;
+  background: #F8F7F3;
+  border: 2px dashed #FF4E00;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.click-arrow {
+  font-size: 20px;
+  color: #FF4E00;
+  flex-shrink: 0;
+}
+
+.steps-list {
+  padding: 18px 22px;
+  display: grid;
+  gap: 10px;
+  border-bottom: 1px solid #F0EDE6;
+}
+.step-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: #F8F7F3;
+  border-radius: 10px;
+  padding: 13px 15px;
+}
+.step-item-num {
+  width: 26px; height: 26px;
+  background: #111;
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0; margin-top: 1px;
+}
+.step-item-text { font-size: 15px; line-height: 1.75; color: #222; }
+.step-item-text b { color: #111; font-weight: 700; }
+.step-item-text code {
+  background: #E8E5DE;
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #111;
+  font-weight: 700;
+}
+
+/* UI再現ボックス */
+.ui-mock {
+  margin: 0;
+  padding: 16px 22px;
+  border-bottom: 1px solid #F0EDE6;
+}
+.ui-mock-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #999;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.ui-bar {
+  background: #24292f;
+  border-radius: 8px 8px 0 0;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.ui-btn {
+  background: transparent;
+  border: 1px solid #555;
+  color: #ccc;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  cursor: default;
+}
+.ui-btn.highlight {
+  background: #FF4E00;
+  border-color: #FF4E00;
+  color: #fff;
+  font-weight: 700;
+}
+.ui-body {
+  background: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: #24292f;
+}
+.ui-file-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 13px;
+}
+.ui-file-row:last-child { border-bottom: none; }
+.ui-file-icon { color: #57606a; font-size: 14px; }
+.ui-file-name { color: #0969da; }
+.ui-file-name.highlight { color: #FF4E00; font-weight: 700; }
+
+.ui-form {
+  background: #fff;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 13px;
+  color: #24292f;
+}
+.ui-form-row {
+  margin-bottom: 12px;
+}
+.ui-form-label {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  display: block;
+}
+.ui-form-input {
+  width: 100%;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  background: #fff;
+}
+.ui-radio-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.ui-radio {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 2px solid #d0d7de;
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+}
+.ui-radio.on { border-color: #0969da; }
+.ui-radio.on::after {
+  content: '';
+  width: 6px; height: 6px;
+  background: #0969da;
+  border-radius: 50%;
+}
+.ui-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.ui-toggle-track {
+  width: 36px; height: 20px;
+  border-radius: 100px;
+  border: 2px solid #d0d7de;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+}
+.ui-toggle-track.on {
+  background: #0969da;
+  border-color: #0969da;
+  justify-content: flex-end;
+}
+.ui-toggle-thumb {
+  width: 14px; height: 14px;
+  background: #d0d7de;
+  border-radius: 50%;
+}
+.ui-toggle-track.on .ui-toggle-thumb { background: #fff; }
+
+.ui-btn-green {
+  background: #1a7f37;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: default;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+.warn {
+  padding: 16px 22px;
+  background: #FEF2F2;
+  border-left: 4px solid #DC2626;
+  font-size: 14px;
+  line-height: 1.75;
+  color: #333;
+}
+.warn b { color: #DC2626; }
+.warn-title { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #DC2626; margin-bottom: 6px; }
+
+.tip {
+  padding: 16px 22px;
+  background: #FFF7ED;
+  border-left: 4px solid #FF4E00;
+  font-size: 14px;
+  line-height: 1.75;
+  color: #333;
+}
+.tip b { color: #C2410C; }
+.tip-title { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #FF4E00; margin-bottom: 6px; }
+
+.ok {
+  padding: 16px 22px;
+  background: #F0FDF4;
+  border-left: 4px solid #16A34A;
+  font-size: 14px;
+  line-height: 1.75;
+  color: #333;
+}
+.ok b { color: #15803D; }
+.ok-title { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #16A34A; margin-bottom: 6px; }
+
+.info {
+  padding: 16px 22px;
+  background: #EFF6FF;
+  border-left: 4px solid #2563EB;
+  font-size: 14px;
+  line-height: 1.75;
+  color: #333;
+}
+.info b { color: #1D4ED8; }
+.info-title { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #2563EB; margin-bottom: 6px; }
+
+.finish {
+  background: #111;
+  border-radius: 14px;
+  padding: 36px 24px;
+  text-align: center;
+  margin-top: 48px;
+  color: #fff;
+}
+.finish h2 { font-size: 24px; font-weight: 900; margin-bottom: 10px; }
+.finish h2 span { color: #FF4E00; }
+.finish p { color: #888; font-size: 14px; margin-bottom: 24px; line-height: 1.8; }
+.url-box {
+  background: rgba(255,78,0,0.15);
+  border: 1px solid rgba(255,78,0,0.4);
+  border-radius: 10px;
+  padding: 16px 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: #FF8C50;
+  word-break: break-all;
+  line-height: 1.6;
+}
+
+.footer {
+  text-align: center;
+  padding: 32px 20px;
+  font-size: 13px;
+  color: #aaa;
+  border-top: 1px solid #E0DDD6;
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-tag">超初心者向け完全ガイド</div>
+  <h1>GitHubを使って<br><span>HTMLを無料で公開</span>する方法</h1>
+  <p>難しいことは何もありません。順番通りにやるだけです。</p>
+</div>
+
+<div class="steps-bar">
+  <div class="step-tab"><div class="step-tab-num">1</div>アカウント作成</div>
+  <div class="step-tab"><div class="step-tab-num">2</div>リポジトリ作成</div>
+  <div class="step-tab"><div class="step-tab-num">3</div>ファイル準備</div>
+  <div class="step-tab"><div class="step-tab-num">4</div>アップロード</div>
+  <div class="step-tab"><div class="step-tab-num">5</div>Pages設定</div>
+  <div class="step-tab"><div class="step-tab-num">6</div>公開完了！</div>
+</div>
+
+<div class="wrap">
+
+<!-- STEP 1 -->
+<div class="step">
+  <div class="step-header">
+    <div class="step-circle c1">1</div>
+    <div>
+      <div class="step-title">GitHubのアカウントを作る</div>
+      <div class="step-sub">最初に1回だけやれば OK</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-text">
+      ブラウザで <b>https://github.com</b> を開いて「Sign up」をクリック。<br>
+      <b>メールアドレス・パスワード・ユーザー名</b> を入力するだけです。
+    </div>
+    <div class="tip">
+      <div class="tip-title">💡 ユーザー名は英語と数字だけにする</div>
+      ユーザー名が「<b>yappi7000</b>」なら、公開URLは<br>
+      <b>https://yappi7000.github.io/〜/</b> という形になります。<br>
+      日本語は使えません。英語と数字とハイフンだけにしてください。
+    </div>
+    <div class="ok">
+      <div class="ok-title">✅ ログイン成功の確認</div>
+      ログインすると「<b>Dashboard</b>」という画面が表示されます。<br>
+      左上に「Dashboard」と書いてあれば成功です。
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step">
+  <div class="step-header">
+    <div class="step-circle c2">2</div>
+    <div>
+      <div class="step-title">リポジトリを作る</div>
+      <div class="step-sub">「リポジトリ」＝ファイルを入れるフォルダのようなもの</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-text">
+      ダッシュボード画面の右上に <b>「＋」ボタン</b> があります。<br>
+      それをクリックしてメニューを開きます。
+    </div>
+
+    <div class="ui-mock">
+      <div class="ui-mock-label">▼ 画面イメージ：右上の「＋」をクリックするとこのメニューが出る</div>
+      <div style="background:#24292f;border-radius:8px;padding:10px 16px;display:flex;justify-content:flex-end;">
+        <div style="background:#FF4E00;color:#fff;border-radius:6px;padding:4px 12px;font-size:12px;font-weight:700;">＋ ▾</div>
+      </div>
+      <div style="background:#fff;border:1px solid #d0d7de;border-radius:0 0 6px 6px;padding:4px 0;width:180px;margin-left:auto;font-size:13px;">
+        <div style="padding:8px 16px;background:#0969da;color:#fff;font-weight:700;">← New repository</div>
+        <div style="padding:8px 16px;color:#57606a;">Import repository</div>
+        <div style="padding:8px 16px;color:#57606a;">New codespace</div>
+      </div>
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-item-num">1</div>
+        <div class="step-item-text">右上の <b>「＋」ボタン</b> をクリック</div>
+      </div>
+      <div class="step-item">
+        <div class="step-item-num">2</div>
+        <div class="step-item-text">メニューから <b>「New repository」</b> をクリック</div>
+      </div>
+    </div>
+
+    <div class="ui-mock">
+      <div class="ui-mock-label">▼ 「New repository」画面の入力例</div>
+      <div class="ui-form">
+        <div class="ui-form-row">
+          <span class="ui-form-label">Repository name ＊</span>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:6px;padding:6px 10px;font-size:13px;color:#57606a;">yappi7000 /</div>
+            <input class="ui-form-input" value="iphone-resale" style="max-width:200px;" readonly>
+          </div>
+          <div style="font-size:12px;color:#FF4E00;margin-top:4px;">← 英語・数字・ハイフンのみ！日本語NG</div>
+        </div>
+        <div class="ui-form-row">
+          <span class="ui-form-label">Choose visibility ＊</span>
+          <div style="border:1px solid #d0d7de;border-radius:6px;padding:8px 12px;background:#fff;">
+            <div class="ui-radio-row">
+              <div class="ui-radio on"></div>
+              <div><b>Public</b> ← 必ずこちらを選ぶ！<br><span style="font-size:12px;color:#57606a;">インターネット上に公開されます</span></div>
+            </div>
+            <div class="ui-radio-row">
+              <div class="ui-radio"></div>
+              <div style="color:#57606a;">Private（選ばないこと）<br><span style="font-size:12px;">非公開。GitHub Pagesが使えません</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="ui-form-row">
+          <span class="ui-form-label">Add README</span>
+          <div class="ui-toggle">
+            <div class="ui-toggle-track on"><div class="ui-toggle-thumb"></div></div>
+            <span><b>ON にする</b>（右にスライド）← 必須！</span>
+          </div>
+        </div>
+        <div class="ui-btn-green">Create repository</div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-title">🚨 絶対に守ること</div>
+      ・リポジトリ名は <b>英語・数字・ハイフンだけ</b>（日本語NG）<br>
+      ・<b>「Public」</b> を選ぶ（Privateだと公開できません）<br>
+      ・<b>「Add README」をON</b> にする（これをしないとアップロードできません）
+    </div>
+
+    <div class="ok">
+      <div class="ok-title">✅ 作成成功の確認</div>
+      「README.md」というファイルが表示されて、<b>「Public」</b> バッジが付いていればOKです。
+    </div>
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step">
+  <div class="step-header">
+    <div class="step-circle c3">3</div>
+    <div>
+      <div class="step-title">アップロード前にファイル名を変える</div>
+      <div class="step-sub">これが一番大事な準備です！</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="warn">
+      <div class="warn-title">🚨 超重要！ここを間違えると公開されません</div>
+      アップロードするHTMLファイルの名前を <b>必ず「index.html」</b> に変えてください。<br><br>
+      ❌ ダメな例：<code style="background:#fee;padding:2px 6px;border-radius:4px;">iphone_roadmap.html</code><br>
+      ❌ ダメな例：<code style="background:#fee;padding:2px 6px;border-radius:4px;">MNP完全ガイド.html</code>（日本語NG）<br>
+      ✅ 正しい例：<code style="background:#efe;padding:2px 6px;border-radius:4px;">index.html</code>
+    </div>
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-item-num">Mac</div>
+        <div class="step-item-text">
+          ① Finderでファイルを探す<br>
+          ② ファイルを <b>1回クリック</b>（選択状態にする）<br>
+          ③ 少し間をおいて <b>もう1回クリック</b>（ダブルクリックではない！）<br>
+          ④ 名前が青くなったら全部消して <b>index.html</b> と入力<br>
+          ⑤ <b>Enterキー</b> を押す
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-item-num">Win</div>
+        <div class="step-item-text">
+          ① ファイルを <b>右クリック</b><br>
+          ② 「<b>名前の変更</b>」をクリック<br>
+          ③ 全部消して <b>index.html</b> と入力<br>
+          ④ <b>Enterキー</b> を押す
+        </div>
+      </div>
+    </div>
+    <div class="ok">
+      <div class="ok-title">✅ 変更後の確認</div>
+      ファイル名が <b>index.html</b> になっていればOK！<br>
+      他の文字が入っていたらやり直してください。
+    </div>
+  </div>
+</div>
+
+<!-- STEP 4 -->
+<div class="step">
+  <div class="step-header">
+    <div class="step-circle c3">4</div>
+    <div>
+      <div class="step-title">index.html をアップロードする</div>
+      <div class="step-sub">ドラッグ＆ドロップするだけ</div>
+    </div>
+  </div>
+  <div class="card">
+
+    <div class="ui-mock">
+      <div class="ui-mock-label">▼ リポジトリ画面：「Add file」ボタンの場所</div>
+      <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div style="font-size:13px;color:#57606a;">main ▾</div>
+        <div style="flex:1;"></div>
+        <div style="border:1px solid #d0d7de;border-radius:6px;padding:5px 12px;font-size:13px;color:#24292f;background:#fff;">Go to file</div>
+        <div style="border:1px solid #d0d7de;border-radius:6px;padding:5px 12px;font-size:13px;color:#24292f;background:#fff;font-weight:700;color:#FF4E00;">Add file ▾ ← ここ！</div>
+        <div style="background:#1a7f37;color:#fff;border-radius:6px;padding:5px 12px;font-size:13px;font-weight:700;">Code</div>
+      </div>
+      <div style="background:#fff;border:1px solid #d0d7de;border-radius:0 0 6px 6px;border-top:none;padding:4px 0;width:160px;margin-left:auto;font-size:13px;">
+        <div style="padding:8px 16px;color:#57606a;">Create new file</div>
+        <div style="padding:8px 16px;background:#0969da;color:#fff;font-weight:700;">← Upload files</div>
+      </div>
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-item-num">1</div>
+        <div class="step-item-text"><b>「Add file ▼」</b> をクリック</div>
+      </div>
+      <div class="step-item">
+        <div class="step-item-num">2</div>
+        <div class="step-item-text"><b>「Upload files」</b> をクリック</div>
+      </div>
+      <div class="step-item">
+        <div class="step-item-num">3</div>
+        <div class="step-item-text">画面中央のエリアに <b>「index.html」</b> をドラッグ＆ドロップ<br>（ファイルをつかんで、そのエリアの上で離すだけ）</div>
+      </div>
+      <div class="step-item">
+        <div class="step-item-num">4</div>
+        <div class="step-item-text">ページを下にスクロールして <b>緑色の「Commit changes」ボタン</b> をクリック</div>
+      </div>
+    </div>
+
+    <div class="ok">
+      <div class="ok-title">✅ アップロード成功の確認</div>
+      ファイル一覧に <b>「README.md」と「index.html」の2つ</b> が表示されていればOKです。
+    </div>
+
+    <div class="warn">
+      <div class="warn-title">⚠️ ファイル名が index.html 以外になってしまったら</div>
+      ① ファイル名をクリック → ② 鉛筆アイコン（✏️）をクリック<br>
+      → ③ 上部のファイル名欄を <b>全部消して「index.html」と入力</b><br>
+      → ④ 「Commit changes...」→「Commit changes」<br><br>
+      ⚠️ <b>日本語が入ったファイル名はこの方法で変更できません！</b><br>
+      その場合は：ファイルを削除（右上の「...」→「Delete file」）してから、<br>
+      パソコンでファイル名を <b>index.html</b> に変えて再アップロードしてください。
+    </div>
+  </div>
+</div>
+
+<!-- STEP 5 -->
+<div class="step">
+  <div class="step-header">
+    <div class="step-circle c4">5</div>
+    <div>
+      <div class="step-title">GitHub Pagesを有効にする</div>
+      <div class="step-sub">URLを公開するための設定</div>
+    </div>
+  </div>
+  <div class="card">
+
+    <div class="ui-mock">
+      <div class="ui-mock-label">▼ リポジトリ上部のメニュー：「Settings」の場所</div>
+      <div style="border-bottom:1px solid #d0d7de;display:flex;gap:0;overflow-x:auto;font-size:13px;">
+        <div style="padding:10px 16px;border-bottom:2px solid transparent;color:#57606a;">Code</div>
+        <div style="padding:10px 16px;border-bottom:2px solid transparent;color:#57606a;">Issues</div>
+        <div style="padding:10px 16px;border-bottom:2px solid transparent;color:#57606a;">Actions</div>
+        <div style="padding:10px 16px;border-bottom:2px solid #FF4E00;color:#FF4E00;font-weight:700;">Settings ← ここ！</div>
+      </div>
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-item-num">1</div>
+        <div class="step-item-text">リポジトリ上部のメニューから <b>「Settings」</b> をクリック</div>
+      </div>
+      <div class="step-item">
+        <div class="step-item-num">2</div>
+        <div class="step-item-text">左サイドバーを少し下にスクロールして <b>「Pages」</b> をクリック</div>
+      </div>
+      <div class="step-item">
+        <div class="step-item-num">3</div>
+        <div class="step-item-text">「Branch」の欄に <b>「None ▼」</b> ボタンがあるのでクリック → <b>「main」</b> を選択</div>
+      </div>
+      <div class="step-item">
+        <div class="step-item-num">4</div>
+        <div class="step-item-text"><b>「Save」</b> ボタンをクリック</div>
+      </div>
+    </div>
+
+    <div class="ui-mock">
+      <div class="ui-mock-label">▼ Pages設定画面のイメージ</div>
+      <div style="background:#fff;border:1px solid #d0d7de;border-radius:8px;padding:16px;">
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px;">Build and deployment</div>
+        <div style="font-size:13px;color:#57606a;margin-bottom:4px;">Branch</div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <div style="border:1px solid #d0d7de;border-radius:6px;padding:5px 12px;font-size:13px;background:#fff;color:#FF4E00;font-weight:700;">None ▼ → main に変える！</div>
+          <div style="border:1px solid #d0d7de;border-radius:6px;padding:5px 12px;font-size:13px;background:#fff;">/ (root)</div>
+          <div style="background:#1a7f37;color:#fff;border-radius:6px;padding:5px 14px;font-size:13px;font-weight:700;">Save ← クリック！</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info">
+      <div class="info-title">⏱ 1〜2分待ってください</div>
+      「Save」を押してからページが公開されるまで <b>1〜2分</b> かかります。<br>
+      すぐ開くと404エラーが出ることがありますが、少し待ってから再度アクセスしてみてください。
+    </div>
+
+    <div class="ok">
+      <div class="ok-title">✅ 設定完了の確認</div>
+      「<b>Your GitHub Pages site is currently being built from the main branch.</b>」<br>
+      という文章が表示されれば設定完了です！
+    </div>
+  </div>
+</div>
+
+<!-- STEP 6 -->
+<div class="step">
+  <div class="step-header">
+    <div class="step-circle c5">6</div>
+    <div>
+      <div class="step-title">URLにアクセスして確認する</div>
+      <div class="step-sub">1〜2分待ってからアクセス</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="info">
+      <div class="info-title">🌐 URLの形式</div>
+      <b>https://ユーザー名.github.io/リポジトリ名/</b><br><br>
+      例：<b>https://yappi7000.github.io/iphone-resale-MNP/</b>
+    </div>
+    <div class="ok">
+      <div class="ok-title">✅ うまくいかない時のチェックリスト</div>
+      □ リポジトリが <b>「Public」</b> になっているか<br>
+      □ ファイル名が <b>「index.html」</b>（小文字・英語のみ）になっているか<br>
+      □ Settings → Pages → Branchが <b>「main」</b> になっているか<br>
+      □ Saveを押してから <b>2分以上</b> 待ったか<br>
+      □ ファイルが <b>真っ白</b> になる場合はファイルサイズが大きすぎる可能性あり
+    </div>
+  </div>
+</div>
+
+<!-- 完了 -->
+<div class="finish">
+  <div style="font-size:44px;margin-bottom:16px;">🎉</div>
+  <h2>公開<span>完了</span>！</h2>
+  <p>
+    このURLをnoteの記事に貼り付けて<br>
+    読者をページに誘導しましょう。
+  </p>
+  <div class="url-box">
+    https://ユーザー名.github.io/リポジトリ名/<br><br>
+    例：https://yappi7000.github.io/iphone-resale-MNP/
+  </div>
+</div>
+
+</div>
+<div class="footer">GitHub Pages 超初心者ガイド</div>
+</body>
+</html>
